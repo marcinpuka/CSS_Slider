@@ -46,10 +46,15 @@ ul.thumbs img {
 }
 
 ul.slides {
-    overflow: hidden;
+    overflow: hidden; 
     clear: both;
     border: #333 solid 4px;
 }
+
+/* slajdy sa poustawiane jeden na drugim 
+a height of the parent ul.slides powoduje, ze 
+widoczny jest tylko jeden z nich */
+
 
 ul.slides, 
 ul.slides li, 
@@ -58,6 +63,11 @@ ul.slides img {
     width: 705px;
     height: 350px;
     position: relative; 
+}
+
+ul.slides li {
+    position: absolute;
+    z-index: 50;
 }
 
 ul.thumbs li a:hover span {
@@ -76,3 +86,52 @@ ul.thumbs li a:hover span {
     
     background: white;
 }
+
+ul.thumbs li a:hover span:before {
+    width: 0;
+    height: 0;
+    border-bottom: 5px solid #fff;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 44px;
+}
+
+ul.thumbs li:first-child a:hover span{
+    left: 0px;
+}
+
+ul.thumbs li:first-child a:hover span:before{
+    left: 25px;
+}
+
+/* --- Animation ---*/
+@-webkit-keyframes 'slide' {
+    0% {left: -500px;}
+    100%{left: 0}
+}
+
+ul.slides li:target {
+    z-index: 100;
+    
+    -webkit-animation-name: slide;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: 1;
+}
+
+/* --- Not Target ---*/
+@-webkit-keyframes 'noTarget' {
+    0% {z-index: 75;}
+    100%{z-index: 75;}
+}
+
+ul.slides li:not(:target) {
+    -webkit-animation-name: noTarget;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: 1;
+    
+}
+
+
